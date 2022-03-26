@@ -11,5 +11,5 @@ enum NavBarConstants {
     static let title = "MOVIE to G"
     static let imageName = "iconoir_cinema-old"
     static let fontName = "Raleway-SemiBold"
-    static let fontSize: CGFloat = 16
+    static let fontSize: CGFloat = 18
 }

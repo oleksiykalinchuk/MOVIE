@@ -13,18 +13,26 @@ final class MoviesView: UIView {
     
     // MARK: Variables
     
+    var movies: [MovieCell.Model] = []
     var onSelectItem: ((Int) -> Void)?
     
     // MARK: UI
     
-    let tableView = UITableView()
+    let collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumInteritemSpacing = 24
+        layout.scrollDirection = .vertical
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.showsVerticalScrollIndicator = false
+        return collectionView
+    }()
     
     // MARK: - Initializers
     
     init() {
         super.init(frame: .zero)
         
-        setupTableView()
+        setupCollectionView()
         setupLayout()
     }
     
@@ -36,15 +44,20 @@ final class MoviesView: UIView {
 
 // MARK: - UITableViewDataSource
 
-extension MoviesView: UITableViewDataSource {
+extension MoviesView: UICollectionViewDataSource {
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        10
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        movies.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = "dsakdka"
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConstants.movieIdentifier,
+                                                      for: indexPath) as! MovieCell
+        cell.configure(model: movies[indexPath.section])
         return cell
     }
     
@@ -52,10 +65,22 @@ extension MoviesView: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate
 
-extension MoviesView: UITableViewDelegate {
+extension MoviesView: UICollectionViewDelegate {
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        onSelectItem?(1)
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        onSelectItem?(movies[indexPath.section].movieId)
+    }
+
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout
+
+extension MoviesView: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.bounds.width - 32, height: collectionView.bounds.width)
     }
     
 }
@@ -64,24 +89,25 @@ extension MoviesView: UITableViewDelegate {
 
 private extension MoviesView {
     
-    func setupTableView() {
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.backgroundColor = AppColors.background
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+    func setupCollectionView() {
+        collectionView.register(MovieCell.self, forCellWithReuseIdentifier: CellConstants.movieIdentifier)
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.backgroundColor = AppColors.background
     }
     
     // MARK: Layout
     
     func setupLayout() {
-        addSubview(tableView)
+        addSubview(collectionView)
         
-        tableView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: self.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            tableView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
+            collectionView.topAnchor.constraint(equalTo: self.topAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            collectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
         ])
     }
+    
 }

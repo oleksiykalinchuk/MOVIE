@@ -29,6 +29,7 @@ private extension FavoriteScreen {
     }
     
     func setupNavBar() {
+        navigationController?.navigationBar.barStyle = .black
         guard let titleImage = UIImage(named: NavBarConstants.imageName) else {
             return
         }

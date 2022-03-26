@@ -15,7 +15,12 @@ final class FavoriteCoordinator: TabScreenCoordinator {
     }()
     
     func makeTabScreen() -> UINavigationController {
-        let item = UITabBarItem(title: "Second", image: UIImage(systemName: "house"), tag: 1)
+        let item = UITabBarItem(
+            title: "Second",
+            image: UIImage(systemName: "house"),
+            tag: 1
+        )
+        
         navigationController.tabBarItem = item
         return navigationController
     }
