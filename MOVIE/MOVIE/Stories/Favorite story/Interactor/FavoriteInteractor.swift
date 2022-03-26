@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct HomeInteractor {
+struct FavoriteInteractor {
     
     // MARK: - Private variables
     
@@ -21,13 +21,12 @@ struct HomeInteractor {
     
 }
 
-// MARK: - HomeInteractorProtocol
+// MARK: - FavoriteInteractorProtocol
 
-extension HomeInteractor: HomeInteractorProtocol {
+extension FavoriteInteractor: FavoriteInteractorProtocol {
     
-    func obtainPopularMovies(page: Int,
-                             completion: @escaping (Result<MoviesPageResponse, Error>) -> Void) {
-        movieService.getPopularMovies(page: page) { result in
+    func obtainTopRatedMovie(page: Int, completion: @escaping (Result<MoviesPageResponse, Error>) -> Void) {
+        movieService.getTopRatedMovies(page: page) { result in
             switch result {
             case let .success(responce):
                 completion(.success(responce))

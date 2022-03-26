@@ -11,4 +11,6 @@ protocol TabScreenCoordinator: AnyObject {
     
     var navigationController: UINavigationController { get }
     
+    func makeTabScreen() -> UINavigationController
+    
 }

@@ -1,5 +1,5 @@
 //
-//  MainCoordinator.swift
+//  TabCoordinator.swift
 //  MOVIE
 //
 //  Created by Oleksii Kalinchuk on 25.03.2022.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class MainCoordinator: MainCoordinatorProtocol {
+final class TabCoordinator: TabCoordinatorProtocol {
     
     // MARK: - Private variables
     
@@ -17,7 +17,7 @@ final class MainCoordinator: MainCoordinatorProtocol {
     
     var childCoordinators: [TabScreenCoordinator] = [
         HomeCoordinator(),
-        View2Coordinator()
+        FavoriteCoordinator()
     ]
     
     // MARK: - Initialization
@@ -30,8 +30,11 @@ final class MainCoordinator: MainCoordinatorProtocol {
     
     func start() {
         tabBarController.viewControllers = childCoordinators.map {
-            $0.navigationController
+            $0.makeTabScreen()
         }
+        tabBarController.tabBar.unselectedItemTintColor = .white
+        tabBarController.tabBar.backgroundColor = AppColors.tabBarBackground
+        tabBarController.tabBar.tintColor = .orange
     }
     
 }
