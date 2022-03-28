@@ -10,7 +10,7 @@ import UIKit
 extension MovieCell {
     
     struct Model {
-        let image: UIImage
+        let posterPath: String
         let title: String
         let overview: String
         let releaseDate: String

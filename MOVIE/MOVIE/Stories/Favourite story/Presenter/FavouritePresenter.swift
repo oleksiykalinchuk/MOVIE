@@ -1,14 +1,14 @@
 //
-//  HomePresenter.swift
+//  FavouritePresenter.swift
 //  MOVIE
 //
-//  Created by Oleksii Kalinchuk on 26.03.2022.
+//  Created by Oleksii Kalinchuk on 28.03.2022.
 //
 
 import UIKit
 
-final class HomePresenter {
-
+final class FavouritePresenter {
+    
     // MARK: - Private
     
     // MARK: Variables
@@ -19,13 +19,13 @@ final class HomePresenter {
     
     // MARK: External dependencies
     
-    private unowned let view: HomeScreenInput
-    private var interactor: HomeInteractorProtocol
+    private unowned let view: FavouriteScreenInput
+    private var interactor: FavoriteInteractorProtocol
     
     // MARK: - Initialization
     
-    init(view: HomeScreenInput,
-         interactor: HomeInteractorProtocol) {
+    init(view: FavouriteScreenInput,
+         interactor: FavoriteInteractorProtocol) {
         self.view = view
         self.interactor = interactor
     }
@@ -34,10 +34,9 @@ final class HomePresenter {
 
 // MARK: - HomeScreenOutput
 
-extension HomePresenter: HomeScreenOutput {
+extension FavouritePresenter: FavouriteScreenOutput {
     
     func didStartScrolling(scrollDirection: MoviesView.ScrollDirection) {
-        
         if scrollDirection == .toTop, pageNumber > 1 {
             pageNumber -= 1
         } else if scrollDirection == .toBottom, pageNumber < totalPages {
@@ -51,21 +50,21 @@ extension HomePresenter: HomeScreenOutput {
     func didFinishLoadingScreen() {
         obtainMoviesAt(page: pageNumber, pagination: true)
     }
-
+    
 }
 
-private extension HomePresenter {
+private extension FavouritePresenter {
     
     func obtainMoviesAt(page: Int, pagination: Bool) {
         guard isPagingEnabled, pageNumber <= totalPages else { return }
 
-        isPagingEnabled = !pagination
         view.setLoaderVisible(true)
+        isPagingEnabled = !pagination
         
-        interactor.obtainPopularMovies(page: page) { [weak self] result in
+        interactor.obtainTopRatedMovie(page: page) { [weak self] result in
             guard let self = self else { return }
-            
             self.view.setLoaderVisible(false)
+
             switch result {
             case let .success(response):
                 self.totalPages = response.totalPages
@@ -88,3 +87,4 @@ private extension HomePresenter {
     }
     
 }
+

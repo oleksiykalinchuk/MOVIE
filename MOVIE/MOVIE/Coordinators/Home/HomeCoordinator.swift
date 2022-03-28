@@ -10,7 +10,7 @@ import UIKit
 final class HomeCoordinator: TabScreenCoordinator {
     
     lazy var navigationController: UINavigationController = {
-        let screen = HomeModuleAssembly.buildModule(moduleOutput: self)
+        let screen = HomeModuleAssembly.buildModule()
         return  UINavigationController(rootViewController: screen)
     }()
     
@@ -23,16 +23,6 @@ final class HomeCoordinator: TabScreenCoordinator {
         
         navigationController.tabBarItem = item
         return navigationController
-    }
-    
-}
-
-// MARK: - HomeModuleOutput
-
-extension HomeCoordinator: HomeModuleOutput {
-    
-    func didOpenMovieDetailInfoScreen(movieId: Int) {
-        
     }
     
 }

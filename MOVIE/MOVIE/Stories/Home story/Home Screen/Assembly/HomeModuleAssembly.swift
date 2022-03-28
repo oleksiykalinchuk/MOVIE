@@ -9,17 +9,15 @@ import UIKit
 
 final class HomeModuleAssembly {
     
-    static func buildModule(moduleOutput: HomeModuleOutput) -> HomeScreen {
+    static func buildModule() -> HomeScreen {
         let view = HomeScreen()
         let service = MovieService()
         let interactor = HomeInteractor(movieService: service)
         
         let presenter = HomePresenter(
             view: view,
-            interactor: interactor,
-            moduleOutput: moduleOutput
+            interactor: interactor
         )
-        
         view.output = presenter
         return view
     }

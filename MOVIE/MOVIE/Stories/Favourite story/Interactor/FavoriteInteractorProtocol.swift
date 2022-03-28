@@ -6,5 +6,6 @@
 //
 
 protocol FavoriteInteractorProtocol {
-    func obtainTopRatedMovie(page: Int, completion: @escaping (Result<MoviesPageResponse, Error>) -> Void)
+    func obtainTopRatedMovie(page: Int,
+                             completion: @escaping (Result<MoviesPageResponse, Error>) -> Void)
 }

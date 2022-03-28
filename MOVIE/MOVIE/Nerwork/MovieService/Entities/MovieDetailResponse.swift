@@ -8,7 +8,7 @@
 struct MovieDetailResponse: Codable {
     let adult: Bool
     let backdropPath: String
-    let belongsToCollection: String?
+    let belongsToCollection: BelongsToCollection?
     let budget: Int
     let genres: [Genre]
     let homepage: String
@@ -46,5 +46,3 @@ struct MovieDetailResponse: Codable {
         case voteCount = "vote_count"
     }
 }
-
-

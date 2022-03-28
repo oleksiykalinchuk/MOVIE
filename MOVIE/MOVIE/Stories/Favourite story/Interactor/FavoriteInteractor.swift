@@ -1,5 +1,5 @@
 //
-//  HomeInteractor.swift
+//  FavoriteInteractor.swift
 //  MOVIE
 //
 //  Created by Oleksii Kalinchuk on 25.03.2022.
@@ -25,7 +25,8 @@ struct FavoriteInteractor {
 
 extension FavoriteInteractor: FavoriteInteractorProtocol {
     
-    func obtainTopRatedMovie(page: Int, completion: @escaping (Result<MoviesPageResponse, Error>) -> Void) {
+    func obtainTopRatedMovie(page: Int,
+                             completion: @escaping (Result<MoviesPageResponse, Error>) -> Void) {
         movieService.getTopRatedMovies(page: page) { result in
             switch result {
             case let .success(responce):

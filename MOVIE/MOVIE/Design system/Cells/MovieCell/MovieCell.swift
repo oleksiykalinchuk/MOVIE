@@ -13,10 +13,10 @@ class MovieCell: UICollectionViewCell {
     
     // MARK: UI
     
-    let posterImageView = makeImageView()
-    let titleLabel = makeTitleLabel()
-    let overviewLabel = makeOverviewLabel()
-    let releaseDateLabel = makeReleaseLabel()
+    private let posterImageView = makeImageView()
+    private let titleLabel = makeTitleLabel()
+    private let overviewLabel = makeOverviewLabel()
+    private let releaseDateLabel = makeReleaseLabel()
     
     // MARK: - Initializers
     
@@ -25,15 +25,16 @@ class MovieCell: UICollectionViewCell {
         
         setupView()
         setupLayout()
-
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Public dunctions
+    
     func configure(model: MovieCell.Model) {
-        posterImageView.image = model.image
+        posterImageView.loadFrom(URLAddress: "\(NetworkConstants.baseImagePath)\(model.posterPath)")
         titleLabel.text = model.title
         overviewLabel.text = model.overview
         releaseDateLabel.text = model.releaseDate
@@ -56,38 +57,44 @@ private extension MovieCell {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         overviewLabel.translatesAutoresizingMaskIntoConstraints = false
         releaseDateLabel.translatesAutoresizingMaskIntoConstraints = false
-        
+    
         let textLabelsStackView = UIStackView(
             arrangedSubviews: [titleLabel, overviewLabel, releaseDateLabel]
         )
         textLabelsStackView.axis = .vertical
-        textLabelsStackView.spacing = 12
+        textLabelsStackView.spacing = CellConstants.spacing
         textLabelsStackView.alignment = .top
-        
-        let totalStack = UIStackView(arrangedSubviews: [posterImageView, textLabelsStackView])
-        addSubview(totalStack)
-        
-        totalStack.translatesAutoresizingMaskIntoConstraints = false
-        totalStack.distribution = .fillEqually
-        
+        textLabelsStackView.translatesAutoresizingMaskIntoConstraints = false
+
+        addSubview(textLabelsStackView)
         NSLayoutConstraint.activate([
-            totalStack.topAnchor.constraint(equalTo: self.topAnchor),
-            totalStack.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            totalStack.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            totalStack.trailingAnchor.constraint(equalTo: self.trailingAnchor)
+            textLabelsStackView.topAnchor.constraint(equalTo: self.topAnchor),
+            textLabelsStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            textLabelsStackView.widthAnchor.constraint(equalTo: self.widthAnchor,
+                                                       multiplier: CellConstants.textLabelsMultiplier)
+        ])
+
+        addSubview(posterImageView)
+        NSLayoutConstraint.activate([
+            posterImageView.topAnchor.constraint(equalTo: self.topAnchor),
+            posterImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            posterImageView.trailingAnchor.constraint(equalTo: textLabelsStackView.leadingAnchor,
+                                                      constant: -CellConstants.spacing),
+            posterImageView.heightAnchor.constraint(equalToConstant: ImageDataProvider.shared.height)
         ])
     }
 }
 
 // MARK: - View builders
 
-private extension MovieCell {
+extension MovieCell {
     
     static func makeImageView() -> UIImageView {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 8
-        imageView.contentMode = .center
-        imageView.contentMode = .scaleAspectFit
+        imageView.layer.masksToBounds = false
+        imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }
     
@@ -98,6 +105,7 @@ private extension MovieCell {
         label.font = UIFont(name: "Raleway-Bold", size: 14)
         label.textColor = .white
         label.textAlignment = .left
+        label.numberOfLines = 0
         return label
     }
     

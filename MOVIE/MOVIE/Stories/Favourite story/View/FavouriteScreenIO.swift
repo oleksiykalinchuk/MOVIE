@@ -1,21 +1,20 @@
 //
-//  HomeScreenIO.swift
+//  FavouriteScreenIO.swift
 //  MOVIE
 //
-//  Created by Oleksii Kalinchuk on 26.03.2022.
+//  Created by Oleksii Kalinchuk on 27.03.2022.
 //
 
 import Foundation
-import UIKit
 
-protocol HomeScreenOutput: AnyObject {
+protocol FavouriteScreenOutput: AnyObject {
     
     func didStartScrolling(scrollDirection: MoviesView.ScrollDirection)
-    func didFinishLoadingScreen()
+    func didFinishLoadingScreen() 
     
 }
 
-protocol HomeScreenInput: AnyObject {
+protocol FavouriteScreenInput: AnyObject {
     
     func configureViews(with movies: [MovieCell.Model])
     func setLoaderVisible(_ isVisible: Bool)

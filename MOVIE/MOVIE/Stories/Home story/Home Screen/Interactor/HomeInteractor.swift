@@ -30,7 +30,6 @@ extension HomeInteractor: HomeInteractorProtocol {
         movieService.getPopularMovies(page: page) { result in
             switch result {
             case let .success(responce):
-                // TODO: logic with getting image here
                 completion(.success(responce))
             case let .failure(error):
                 completion(.failure(error))

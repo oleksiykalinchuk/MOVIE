@@ -1,25 +1,27 @@
 //
-//  HomeScreen.swift
+//  FavouriteScreen.swift
 //  MOVIE
 //
-//  Created by Oleksii Kalinchuk on 24.03.2022.
+//  Created by Oleksii Kalinchuk on 25.03.2022.
 //
 
 import UIKit
 
-final class HomeScreen: UIViewController {
+final class FavouriteScreen: UIViewController {
     
     // MARK: - Public
     
     // MARK: External dependencies
     
-    var output: HomeScreenOutput!
+    var output: FavouriteScreenOutput!
     
     // MARK: UI
     
     let loadingIndicator = LoadingIndocatorView(frame: .zero)
     
     // MARK: - Private
+    
+    // MARK: UI
     
     private let moviesView = MoviesView()
 
@@ -37,12 +39,13 @@ final class HomeScreen: UIViewController {
         
         output.didFinishLoadingScreen()
     }
-
 }
 
-// MARK: - HomeScreenInput
+extension FavouriteScreen: LoadingIndicatorDisplayable { }
 
-extension HomeScreen: HomeScreenInput {
+// MARK: - FavouriteScreenInput
+
+extension FavouriteScreen: FavouriteScreenInput {
     
     func configureViews(with movies: [MovieCell.Model]) {
         guard !movies.isEmpty else { return }
@@ -60,13 +63,9 @@ extension HomeScreen: HomeScreenInput {
     
 }
 
-// MARK: - LoadingIndicatorProtocol
-
-extension HomeScreen: LoadingIndicatorDisplayable { }
-
 // MARK: - Private functions
 
-private extension HomeScreen {
+private extension FavouriteScreen {
     
     // MARK: - Setup
     
@@ -86,6 +85,7 @@ private extension HomeScreen {
             let movieDetailsScreen = MovieDetailsModuleAssembly.buildModule(movieId: movieId)
             self?.navigationController?.pushViewController(movieDetailsScreen, animated: false)
         }
+        
         moviesView.didScrollAllMovies = { [weak self] scrollDirection in
             self?.output.didStartScrolling(scrollDirection: scrollDirection)
         }

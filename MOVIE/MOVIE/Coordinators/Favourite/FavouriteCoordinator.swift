@@ -7,17 +7,17 @@
 
 import UIKit
 
-final class FavoriteCoordinator: TabScreenCoordinator {
+final class FavouriteCoordinator: TabScreenCoordinator {
     
     lazy var navigationController: UINavigationController = {
-        let screen = FavoriteModuleAssembly.buildModule()
+        let screen = FavouriteModuleAssembly.buildModule()
         return  UINavigationController(rootViewController: screen)
     }()
     
     func makeTabScreen() -> UINavigationController {
         let item = UITabBarItem(
-            title: "Second",
-            image: UIImage(systemName: "house"),
+            title: "Favourite",
+            image: UIImage(systemName: "star"),
             tag: 1
         )
         

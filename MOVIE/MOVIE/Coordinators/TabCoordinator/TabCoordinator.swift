@@ -17,7 +17,7 @@ final class TabCoordinator: TabCoordinatorProtocol {
     
     var childCoordinators: [TabScreenCoordinator] = [
         HomeCoordinator(),
-        FavoriteCoordinator()
+        FavouriteCoordinator()
     ]
     
     // MARK: - Initialization

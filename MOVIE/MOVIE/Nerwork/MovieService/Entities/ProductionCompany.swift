@@ -7,7 +7,8 @@
 
 struct ProductionCompany: Codable {
     let id: Int
-    let logoPath, name, originCountry: String
+    let logoPath: String?
+    let name, originCountry: String
 
     enum CodingKeys: String, CodingKey {
         case id

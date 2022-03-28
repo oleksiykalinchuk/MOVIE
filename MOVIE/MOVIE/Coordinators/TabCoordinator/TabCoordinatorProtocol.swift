@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol TabCoordinatorProtocol {
+protocol TabCoordinatorProtocol: AnyObject {
     
     var childCoordinators: [TabScreenCoordinator] { get set }
     

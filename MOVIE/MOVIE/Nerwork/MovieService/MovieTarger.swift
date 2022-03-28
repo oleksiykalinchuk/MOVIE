@@ -32,7 +32,7 @@ extension MovieTarget: TargetType {
         case .popularMovie:
             return "popular"
         case .topRatedMovie:
-            return "/top_rated"
+            return "top_rated"
         case let .movieDetailInfo(movieId):
             return "\(movieId)"
         }
