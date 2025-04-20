@@ -9,5 +9,4 @@ import Foundation
 
 enum NetworkConstants {
     static let baseImagePath = "https://image.tmdb.org/t/p/w500"
-    static let test = "test"
 }
